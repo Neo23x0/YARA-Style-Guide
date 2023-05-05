@@ -14,7 +14,7 @@ Whether you are a seasoned security professional or just getting started with YA
 ## Rule Structure
 
 ```yara
-rule 
+rule TBD
 ```
 
 ## Rule Name
