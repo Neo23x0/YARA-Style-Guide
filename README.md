@@ -29,12 +29,13 @@ The most generic values are the category of the threat. The following list conta
 
 ### Main Categories
 
-- **MAL** (malware): used for malware
-- **HKTL** (hacktool): used for hack tools
-- **WEBSHELL**: used for web shells
-- **EXPL** (exploit): used for exploit codes (e.g., proof-of-concept code, exploit payloads etc.)
-- **VULN** (vulnerability): used for vulnerabilities (e.g., a vulnerable driver, a vulnerable JAVA library etc.)
-- **SUSP** (suspicious): used for all kinds of anomalies, suspicious capabilities (e.g., obfuscated code, shell codes, suspicious combination of imports, suspicious set of commands in a script etc.)
+- **MAL** (malware) : used for malware
+- **HKTL** (hacktool) : used for hack tools
+- **WEBSHELL** : used for web shells
+- **EXPL** (exploit) : used for exploit codes (e.g., proof-of-concept code, exploit payloads etc.)
+- **VULN** (vulnerability) : used for vulnerabilities (e.g., a vulnerable driver, a vulnerable JAVA library etc.)
+- **SUSP** (suspicious) : used for all kinds of anomalies, suspicious capabilities (e.g., obfuscated code, shell codes, suspicious combination of imports, suspicious set of commands in a script etc.)
+- **PUA** : used for possibly unwanted applications
 
 Other categories that proofed to be useful when classifying YARA rules:
 
@@ -47,13 +48,15 @@ Important: the lists are not exhaustive and can be extended at any time if neces
 - **ANOMALY** (generic and suspicious characteristics)
 - **RANSOM**
 
-### Types of Malware
+### Types of Malware / File
 
 - **RAT**
 - **Implant**
 - **Stealer**
 - **Loader**
 - **Crypter**
+- **PEEXE** (often omitted)
+- **DRV** : used for drivers
 
 ### Operating System
 
@@ -66,7 +69,6 @@ Important: the lists are not exhaustive and can be extended at any time if neces
 - **X64** (often omitted)
 - **X86** (often omitted)
 - **ARM**
-- **AIX**
 - **SPARC**
 
 ### Technology
