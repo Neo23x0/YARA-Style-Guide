@@ -9,7 +9,7 @@ Creating effective YARA rules is not an easy task, and it requires a deep unders
 
 This guide will cover the best practices for YARA rule structure and contents, including recommendations for naming conventions, syntax, and content selection. By following these guidelines, you will be able to create YARA rules that are accurate, concise, and easy to read and maintain.
 
-Whether you are a seasoned security professional or just getting started with YARA, this guide will provide you with the tools you need to create effective malware detection rules. So, let's get started!
+Whether you are a seasoned security professional or just getting started with YARA, this guide will provide you with the tools you need to create effective malware detection rules.
 
 ## Rule Structure
 
