@@ -11,15 +11,9 @@ This guide will cover the best practices for YARA rule structure and contents, i
 
 Whether you are a seasoned security professional or just getting started with YARA, this guide will provide you with the tools you need to create effective malware detection rules. So, let's get started!
 
-## Rule Structure
+## Rule Names
 
-```yara
-rule 
-```
-
-## Rule Name
-
-The rule name is sometimes the only or first piece of information that is shown to a user. Therefore it should already include information about the type of threat, tags that classify the threat, a descriptive identifier and even an information about the context or a period in which the rule was created. 
+The rule name is sometimes the only or first piece of information that is shown to a user. Therefore it should already include information about the type of threat, keywords that classify the threat, a descriptive identifier and even an information about the context or a period in which the rule was created. 
 
 The different values are separated by an underscore character (`_`). 
 
@@ -112,14 +106,14 @@ The threat identifier tags are straight forward.
 - **PlugX**
 - **QakBot**
 
-### Other Often Used Tags
+### Other Often Used Keywords
 
 - **TINY** : used for very small files
 - **HUGE** : used for very big files
 - **UAC_Bypass**
 - **Base64**
 
-### Uniqueness Suffixes
+### Suffixes to Guarantee Uniqueness
 
 The suffixes lower the chances that two analysts choose the same rule name by adding values to the rule.
 
@@ -130,7 +124,7 @@ The recommended values are:
 
 ### Combining the Categories
 
-The mentioned tags are combined to create more specific classification.
+The mentioned keywords are combined to create a more specific classification.
 
 Here are some examples:
 
@@ -143,6 +137,38 @@ Here are some examples:
 - `APT_MAL_CozyBear_ELF_Loader_Apr18` : Rule written in April 2018 for a loader used by the threat actor Cozy Bear written for the Linux platform. 
 - `SUSP_Anomaly_LNK_Huge_Apr22` : Rule written in April 2022 for suspiciously big link files
 - `MAL_CRIME_RANSOM_PS1_OBFUSC_Loader_May23` : Rule written in May 2023xw for an obfuscated PowerShell loader noticed in a Ransomware campaign
+
+
+## Rule Structure and Values
+
+```yara
+rule RULE_NAME : TAGS {
+    meta:
+        description = "Detects ..."
+        author = "Author Name / Company / Org"
+        date = "YYYY-MM-DD"
+        reference = "URL / Internal Research"
+        score = [0-100]
+        [OPTIONAL META DATA FIELDS]
+    strings:
+        $string1 = "value"
+    condition:
+        header_check
+        file_size_limitation
+        other_limitations
+        string_combinations
+        false_positive_filters
+}
+```
+
+
+### Optional Meta Data Fields
+
+- `hash`: one or multiple MD5, SHA1, SHA256 values (just use the field `hash` multiple times)
+- `modified`: a date in format YYYY-MM-DD to indicate the last change date of the rule (used when the rule gets changed after the initial creation)
+- `old_rule_name`: the previous name of the rule (used to allow searches for the old name in case the name has been changed)
+- `limit`: a value that 
+
 
 ## Rule Tags
 
