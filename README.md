@@ -378,8 +378,60 @@ rule RULE_NAME : TAGS {
         string_combinations
         false_positive_filters
 }
-``````
+```
 
 In the example above, the condition would be met if the checks in header_check, file_size_limitation, other_limitations, string_combinations and false_positive_filters are true. It's important to write conditions in a way that optimizes performance, especially when dealing with large data sets or live traffic.
 
 Remember, the conditions should reflect the detection logic of your rule, be it based on the presence of certain strings, file size restrictions, or other characteristics that define your target threat. Be cautious while defining conditions, as too broad or too lenient conditions might lead to a high number of false positives.
+
+### Examples
+
+```yara
+rule RULE_NAME : TAGS {
+    ...
+    condition:
+        uint16(0) == 0x5a4d 
+        and filesize < 300KB 
+        and pe.number_of_signature == 0
+        and all of ($s*)
+        and not 1 of ($fp*)
+}
+```
+
+For improved clarity, it's advised to place a new line before the and keyword. Experience has demonstrated that this approach enhances readability, making rules quicker to understand.
+
+When parts of the condition need to be combined using an or operator, it's recommended to encapsulate these components within an indented block:
+
+```yara
+rule RULE_NAME : TAGS {
+    ...
+    condition:
+        uint16(0) == 0x5a4d 
+        and filesize < 300KB 
+        and pe.number_of_signature == 0
+        and (
+            1 of ($x*)
+            or 3 of them
+        )
+        and not 1 of ($fp*)
+}
+```
+
+For conditions that require the evaluation of multiple potential values, such as different file markers, the same indented block format should be applied:
+
+```yara
+rule RULE_NAME : TAGS {
+    ...
+    condition:
+        (
+            uint16(0) == 0x5a4d     // MZ marker
+            or uint16(0) == 0x457f  // ELF marker
+        )
+        and filesize < 300KB 
+        and pe.number_of_signature == 0
+        and all of ($s*)
+        and not 1 of ($fp*)
+}
+```
+
+Adhering to this format fosters easy readability and promotes a clean, structured presentation of the rule conditions.
