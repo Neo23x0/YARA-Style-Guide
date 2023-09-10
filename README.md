@@ -224,6 +224,8 @@ The following chapters describe the values in more detail.
 
 #### Description
 
+| Field  | Description                                  |
+|--------|----------------------------------------------|
 | Value | String |
 | Preferred Length | 60-400 characters |
 | Avoid | URLs |
@@ -239,6 +241,8 @@ Starting Convention: Start your description with the phrase "Detects ...". This 
 
 #### Author
 
+| Field  | Description                                  |
+|--------|----------------------------------------------|
 | Value | String |
 | Avoid | URLs |
 | Prefer | Full name, Twitter handles |
@@ -255,6 +259,8 @@ Multiple Authors: If a rule is a result of collaborative work, instead of using 
 
 #### Reference
 
+| Field  | Description                                  |
+|--------|----------------------------------------------|
 | Value | List of Strings |
 | Avoid | Unstable links, links to private resources |
 | Prefer | URLs |
@@ -273,6 +279,8 @@ Internal Work: If the YARA rule is derived from your own research, ideas, or obs
 
 #### Date
 
+| Field  | Description                                  |
+|--------|----------------------------------------------|
 | Value | List of Strings |
 | Preferred Format | YYYY-MM-DD |
 
@@ -297,6 +305,8 @@ tags: This is used to include a list of tags. Each tag should be separated by a 
 
 #### Hash 
 
+| Field  | Description                                  |
+|--------|----------------------------------------------|
 | Value | List of Strings |
 | Avoid | N/A |
 | Prefer | SHA256 hash |
@@ -313,6 +323,8 @@ Exception for Memory-based Matches: An exception to the above is when your rule 
 
 #### Score 
 
+| Field  | Description                                  |
+|--------|----------------------------------------------|
 | Value | Number|
 | Range | 0-100 |
 
