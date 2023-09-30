@@ -11,6 +11,12 @@ This guide will cover the best practices for YARA rule structure and contents, i
 
 Whether you are a seasoned security professional or just getting started with YARA, this guide will provide you with the tools you need to create effective malware detection rules.
 
+## Scope
+
+This YARA Style Guide is primarily focused on enhancing readability, maintainability, and usability of YARA rules. It doesn’t delve into the aspects of performance or resource utilization, although adhering to these best practices can inadvertently lead to optimized rule set performance. (e.g., the order of the expressions in the condition)
+
+For in-depth insights and strategies on performance and resource optimization, we recommend exploring [this project](https://github.com/Neo23x0/YARA-Performance-Guidelines/).
+
 ## Rule Names
 
 ```yara
@@ -165,6 +171,50 @@ rule RULE_NAME : TAGS {
         other_limitations
         string_combinations
         false_positive_filters
+}
+```
+
+
+## Indentation
+
+Utilize indentation to enhance the readability of your YARA rules. It's common practice to use either 3 or 4 spaces or tabs for indentation in most published rules. This consistency aids in maintaining a clean and organized presentation of the code, making it easier to read and understand.
+
+DON'T
+```
+rule MY_RULE {
+meta:
+description = "my test rule"
+author = "John Galt"
+strings:
+$s1 = "eval("
+$s2 = "WScript.Shell"
+condition:
+filesize < 10KB and all of them 
+}
+
+rule MY_RULE {
+ meta:
+  description = "my test rule"
+  author = "John Galt"
+ strings:
+  $s1 = "eval("
+  $s2 = "WScript.Shell"
+ condition:
+  filesize < 10KB and all of them 
+}
+```
+
+DO
+```
+rule MY_RULE {
+   meta:
+      description = "my test rule"
+      author = "John Galt"
+   strings:
+      $s1 = "eval("
+      $s2 = "WScript.Shell"
+   condition:
+      filesize < 10KB and all of them 
 }
 ```
 
@@ -350,22 +400,88 @@ Use this table as a guideline to assign a score, ensuring that your rule appropr
 | 80-100      | High (Direct matches on malware/hack tools)| Malware, hack tools, and other malicious entities identified with high accuracy |
 
 ## Rule Strings
+
 The strings section of a YARA rule specifies the sequences of bytes, strings, or regular expressions that will be searched for within the file. Each string is given a unique identifier that can be used in the condition section to refer to the string.
 
 ```yara
-rule RULE_NAME : TAGS {
+rule RULE_NAME {
     ...
     strings:
-        $string1 = "value"
-        $string2 = { E2 34 F1 67 }
-        $regex1 = /abc[def]+/
+        $s1 = "value"
+        $s2 = { E2 34 F1 67 }
+        $r1 = /abc[def]+/
     ...
 }
 ```
 
-In the example above, $string1 is a simple string, $string2 is a sequence of bytes, and $regex1 is a regular expression.
+In the example above, `$s1` is a simple string, `$s2` is a sequence of bytes, and `$r1` is a regular expression.
+
+### String Identifiers
+
+There are some best practices in regards to the use of string values in YARA.
+
+Opt for Readable String Values
+For enhanced readability, avoid using hexadecimal representation for string values that can be effectively represented with standard strings. Exceptions to this rule include strings containing control characters like \t (tab) or \n (newline), where the hexadecimal format is preferred.
+
+Avoid:
+
+```yara
+$s1 = { 46 72 6F 6D 42 61 73 65 36 34 53 74 72 69 6E 67 28 }
+```
+
+Recommended:
+
+```yara
+$s1 = "FromBase64String("
+```
+
+#### Choose Efficient String Identifiers
+
+Opt for concise or descriptive identifiers for strings to enhance the readability of your YARA rules. Avoid long, non-descriptive identifiers, as they can clutter the code and make conditions, especially complex ones, difficult to read and understand.
+
+Avoid:
+
+```yara
+   $string_value_footer_1 = "eval("
+   $selection_14 = "eval("
+...
+condition:
+   all of (selection_*) and 3 of ($string_value_footer)
+```
+Recommended:
+
+```yara
+   $s1 = "eval("
+   $eval = "eval("
+condition:
+   all of (s*) and $eval
+```
+
+Incorporating these practices ensures your YARA rules are not only functional but also user-friendly, fostering an environment of efficiency and collaboration among security professionals.
+
+### Hex Identifiers
+
+For hexadecimal representations that primarily consist of ASCII characters, it’s helpful to include the ASCII string representation or the readable portions thereof in a comment, enhancing understandability.
+
+```yara
+   /* )));\nIEX( */
+   $s1 = { 29 29 29 3b 0a 49 45 58 28 0a }
+```
+
+To enhance readability, it's advisable to segment hex identifiers at every 16-byte interval. This practice is particularly beneficial for lengthy values, allowing observers to quickly gauge the length of the value without the need to horizontally scroll through the code.
+
+```yara
+   $s1 = { 2c 20 2a 79 6f 77 2e 69 20 26 20 30 78 46 46 29 
+           3b 0a 20 20 70 72 69 6e 74 66 20 28 28 28 2a 79 
+           6f 77 2e 69 20 26 20 30 78 66 66 29 20 3d 3d 20 
+           30 78 34 31 29 20 3f 20 22 4c 49 54 54 4c 45 5c 
+           6e 22 20 3a 20 22 42 49 47 5c 6e 22 29 3b 0a 20 
+           20 70 72 69 6e 74 66 20 28 22 73 68 6f 72 74 20 
+           25 64 3b 20 20 69 6e 74 }
+```
 
 ## Rule Condition
+
 The condition section of a YARA rule specifies the conditions that must be met for the rule to be considered a match. This is where the magic of YARA really happens. Conditions can be simple or complex, combining multiple strings, byte sequences, and metadata checks.
 
 ```yara
@@ -417,6 +533,22 @@ rule RULE_NAME : TAGS {
 }
 ```
 
+```yara
+rule RULE_NAME : TAGS {
+    ...
+    condition:
+        uint16(0) == 0x5a4d 
+        and filesize < 300KB 
+        and (
+            1 of ($x*)
+            or (
+                2 of ($s*) 
+                and 3 of them
+            )
+        )
+}
+```
+
 For conditions that require the evaluation of multiple potential values, such as different file markers, the same indented block format should be applied:
 
 ```yara
@@ -435,3 +567,19 @@ rule RULE_NAME : TAGS {
 ```
 
 Adhering to this format fosters easy readability and promotes a clean, structured presentation of the rule conditions.
+
+## Sometimes Performance Trumps Readability
+
+### String Matching FTW
+
+It’s not uncommon for some to leverage looping and hashing techniques to identify patterns within the PE headers of files, as illustrated below. In this example, the author iteratively calculates the MD5 hash of the initial 100 bytes of code across all PE sections and contrasts it with a predetermined hash value.
+
+```yara
+   condition:
+      for any var_sect in pe.sections:
+         (hash.md5( var_sect.raw_data_offset, 0x100 ) == "d99eb1e503cac3a1e90450d0c07e3ffc" )
+```
+
+However, this approach is less efficient than it might initially appear. YARA is intrinsically designed for direct string and pattern matching, making it highly efficient in these tasks. Conversely, cycling through each section and calculating hashes can be resource-intensive and less optimal.
+
+A more streamlined and efficient approach is to directly incorporate the 100 bytes as a hexadecimal string within the YARA rule. This modification bypasses the computational overhead of hashing and leverages YARA's innate efficiency in string matching, ensuring rapid and precise detection without unnecessary CPU consumption.
