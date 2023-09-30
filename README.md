@@ -480,6 +480,31 @@ To enhance readability, it's advisable to segment hex identifiers at every 16-by
            25 64 3b 20 20 69 6e 74 }
 ```
 
+### Regular Expressions
+
+TBD
+
+### Categorizing Strings: The Triad Approach ($x*, $s*, $a*)
+
+Understanding the categorization of strings is crucial in enhancing the efficiency and accuracy of YARA rules. We propose a three-category approach to organize and identify strings effectively:
+
+1. **Highly Specific Strings ($x*)**
+   - These are unique identifiers, characterized by their specificity to a particular threat. Their occurrence is almost exclusively associated with the intended target, making them highly reliable indicators.
+   - **Notation:** We designate these strings with an `x` prefix.
+
+2. **Grouped Strings ($s*)**
+   - These strings may not be distinctive individually but become significant when considered as part of a collective group. These sets of strings, though not unique on their own, can be indicative of a threat when found together.
+   - **Notation:** They are marked with an `s` prefix to indicate their collective utility.
+
+3. **Preselection Strings ($a*)**
+   - These are commonly found strings that don’t directly indicate a threat but are instrumental in narrowing down the file type or format under scrutiny. They play a pivotal role in optimizing the rule's performance by limiting the scope of the search.
+   - **Notation:** An `a` prefix is used to identify these auxiliary strings.
+
+Example:
+
+
+### False Positive Filters ($f*)
+
 ## Rule Condition
 
 The condition section of a YARA rule specifies the conditions that must be met for the rule to be considered a match. This is where the magic of YARA really happens. Conditions can be simple or complex, combining multiple strings, byte sequences, and metadata checks.
@@ -568,7 +593,7 @@ rule RULE_NAME : TAGS {
 
 Adhering to this format fosters easy readability and promotes a clean, structured presentation of the rule conditions.
 
-## Sometimes Performance Trumps Readability
+## Tweaks
 
 ### String Matching FTW
 
