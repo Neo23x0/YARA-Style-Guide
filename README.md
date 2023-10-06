@@ -331,7 +331,7 @@ Internal Work: If the YARA rule is derived from your own research, ideas, or obs
 
 | Field  | Description                                  |
 |--------|----------------------------------------------|
-| Value | List of Strings |
+| Value | String |
 | Preferred Format | YYYY-MM-DD |
 
 The "Date" field serves as a crucial indicator of when a YARA rule was initially formulated. This timestamp is essential to understand the context and timing of the rule's creation. Here's how you can optimally populate this field:
@@ -597,7 +597,7 @@ Adhering to this format fosters easy readability and promotes a clean, structure
 
 ### String Matching FTW
 
-It’s not uncommon for some to leverage looping and hashing techniques to identify patterns within the PE headers of files, as illustrated below. In this example, the author iteratively calculates the MD5 hash of the initial 100 bytes of code across all PE sections and contrasts it with a predetermined hash value.
+It’s not uncommon for some to leverage looping and hashing techniques to identify patterns within the PE headers of files, as illustrated below. In this example, the author iteratively calculates the MD5 hash of the initial 256 bytes of code across all PE sections and contrasts it with a predetermined hash value.
 
 ```yara
    condition:
@@ -607,4 +607,4 @@ It’s not uncommon for some to leverage looping and hashing techniques to ident
 
 However, this approach is less efficient than it might initially appear. YARA is intrinsically designed for direct string and pattern matching, making it highly efficient in these tasks. Conversely, cycling through each section and calculating hashes can be resource-intensive and less optimal.
 
-A more streamlined and efficient approach is to directly incorporate the 100 bytes as a hexadecimal string within the YARA rule. This modification bypasses the computational overhead of hashing and leverages YARA's innate efficiency in string matching, ensuring rapid and precise detection without unnecessary CPU consumption.
+A more streamlined and efficient approach is to directly incorporate the 256 bytes as a hexadecimal string within the YARA rule. This modification bypasses the computational overhead of hashing and leverages YARA's innate efficiency in string matching, ensuring rapid and precise detection without unnecessary CPU consumption.
