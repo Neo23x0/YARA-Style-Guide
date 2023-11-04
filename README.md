@@ -180,7 +180,7 @@ rule RULE_NAME : TAGS {
 Utilize indentation to enhance the readability of your YARA rules. It's common practice to use either 3 or 4 spaces or tabs for indentation in most published rules. This consistency aids in maintaining a clean and organized presentation of the code, making it easier to read and understand.
 
 DON'T
-```
+```yara
 rule MY_RULE {
 meta:
 description = "my test rule"
@@ -205,7 +205,7 @@ rule MY_RULE {
 ```
 
 DO
-```
+```yara
 rule MY_RULE {
    meta:
       description = "my test rule"
@@ -496,14 +496,60 @@ Understanding the categorization of strings is crucial in enhancing the efficien
    - These strings may not be distinctive individually but become significant when considered as part of a collective group. These sets of strings, though not unique on their own, can be indicative of a threat when found together.
    - **Notation:** They are marked with an `s` prefix to indicate their collective utility.
 
-3. **Preselection Strings ($a*)**
+3. **Pre-Selection Strings ($a*)**
    - These are commonly found strings that don’t directly indicate a threat but are instrumental in narrowing down the file type or format under scrutiny. They play a pivotal role in optimizing the rule's performance by limiting the scope of the search.
    - **Notation:** An `a` prefix is used to identify these auxiliary strings.
 
 Example:
 
+```yara
+rule HKTL_Go_EasyHack_Oct23 {
+   meta:
+      description = "Detects a Go based hack tool"
+      author = "John Galt"
+   strings:
+      $a1 = "Go build"
+
+      $x1 = "Usage: easyhack.exe -t [IP] -p [PORT]"
+      $x2 = "c0d3d by @EdgyHackerFreak"
+
+      $s1 = "main.inject"
+      $s2 = "main.loadPayload"
+   condition:
+      uint16(0) == 0x5a4d
+      and filesize < 20MB
+      and $a1 
+      and (
+        1 of ($x*)
+        or all of ($s*)
+      )
+      or 4 of them
+}
+```
 
 ### False Positive Filters ($f*)
+
+```yara
+rule HKTL_Go_EasyHack_Oct23 {
+   meta:
+      description = "Detects a Go based hack tool"
+      author = "John Galt"
+   strings:
+      $a1 = "Go build"
+
+      $s1 = "main.inject"
+      $s2 = "main.loadPayload"
+
+      $fp1 = "Copyright by CrappySoft" wide
+   condition:
+      uint16(0) == 0x5a4d
+      and filesize < 20MB
+      and $a1 
+      and all of ($s*)
+      and not 1 of ($fp*)
+}
+```
+
 
 ## Rule Condition
 
