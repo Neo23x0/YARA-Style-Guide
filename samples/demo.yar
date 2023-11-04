@@ -4,7 +4,6 @@ rule LOG_F5_BIGIP_Exploitation_Artefacts_CVE_2021_22986_Mar21_1 : LOG {
       description = "Detects forensic artefacts indicating successful exploitation of F5 BIG IP appliances as reported by NCCGroup"
       author = "Florian Roth (Nextron Systems)"
       reference = "https://research.nccgroup.com/2021/03/18/rift-detection-capabilities-for-recent-f5-big-ip-big-iq-icontrol-rest-api-vulnerabilities-cve-2021-22986/"
-      date = "2021-03-20"
       score = 80
    strings:
       $x1 = "\",\"method\":\"POST\",\"uri\":\"http://localhost:8100/mgmt/tm/util/bash\",\"status\":200," ascii
@@ -17,7 +16,6 @@ rule SUSP_ThemeBleed_Theme_Sep23 {
     meta:
         description = "Detects domain or IP placement in Windows theme files"
         author = "@m_haggis, @nas_bench"
-        date = "2023-09-13"
         reference = "https://github.com/gabe-k/themebleed"
         score = 75
 
