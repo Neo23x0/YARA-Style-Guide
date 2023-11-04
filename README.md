@@ -507,6 +507,8 @@ rule HKTL_Go_EasyHack_Oct23 {
    meta:
       description = "Detects a Go based hack tool"
       author = "John Galt"
+      date = "2023-09-13"
+      reference = "https://githoop.com/EdgyHackerFreak/EasyHack"
    strings:
       $a1 = "Go build"
 
@@ -529,6 +531,11 @@ rule HKTL_Go_EasyHack_Oct23 {
 
 ### False Positive Filters ($f*)
 
+False positives can hinder the effectiveness of YARA rules. To address this, we introduce a method to manage potential false positives.
+
+- Strings that might indicate benign or non-malicious patterns should be prefixed with `fp`
+- If a rule matches malicious patterns but also matches a `$fp*` string, the rule doesn't trigger
+
 ```yara
 rule HKTL_Go_EasyHack_Oct23 {
    meta:
@@ -549,7 +556,6 @@ rule HKTL_Go_EasyHack_Oct23 {
       and not 1 of ($fp*)
 }
 ```
-
 
 ## Rule Condition
 
