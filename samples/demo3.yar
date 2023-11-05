@@ -5,7 +5,7 @@ rule win_cobalt_sleep_encrypt
 		created = "2023/08/27"
 		description = "Detects Sleep Encryption Logic Found in Cobalt Strike Deployments"
 		sha_256 = "26b2f12906c3590c8272b80358867944fd86b9f2cc21ee6f76f023db812e5bb1"
-		
+		sha_1 = "14b1a681fea9c0833f20ecc6ef231dfb7cc62a3d"
 	strings:
 	
 		/*
