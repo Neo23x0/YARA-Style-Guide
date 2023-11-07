@@ -2,6 +2,7 @@ rule Rule_With_Issue {
   meta:
     description = "This is a broken rule"
     author = "Florian Roth"
+    date = "2023-11-07"
   strings:
     $a1 = "this is a test"
     $a2 = "another string for the test"
@@ -13,6 +14,7 @@ rule Rule_With_Error {
   meta:
     description = "This is a broken rule"
     author = "Florian Roth"
+    date = "2023-11-07"
   strings:
     $a1 = "this is a test"
     $a2 = "another string for the test"
