@@ -35,7 +35,7 @@ rule SUSP_Bad_Regex_Sep23 {
         reference = "https://github.com/gabe-k/themebleed"
         score = 75
     strings:
-        $sr1 = /\"[0-9a-zA-Z\.-]{1,40}\:[0-9a-zA-Z\.-]{1,40}\"/
+        $sr1 = /[\w\-.]{1,3}@[\w\-.]{1,3}/
     condition:
         $sr1
 }
