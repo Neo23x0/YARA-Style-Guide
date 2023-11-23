@@ -28,3 +28,15 @@ rule SUSP_ThemeBleed_Theme_Sep23 {
         filesize < 1MB and all of them
 }
 
+rule SUSP_Bad_Regex_Sep23 {
+    meta:
+        description = "Detects a bad regex"
+        author = "Noob"
+        reference = "https://github.com/gabe-k/themebleed"
+        score = 75
+    strings:
+        $sr1 = /\"[0-9a-zA-Z\.-]{1,40}\:[0-9a-zA-Z\.-]{1,40}\"/
+    condition:
+        $sr1
+}
+
