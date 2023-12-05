@@ -19,7 +19,6 @@ rule SUSP_ThemeBleed_Theme_Sep23 {
         author = "@m_haggis, @nas_bench"
         reference = "https://github.com/gabe-k/themebleed"
         score = 75
-
     strings:
         $s1 = /Path=\\\\[0-9a-zA-Z\.-]{1,20}\\/
         $s2 = "[VisualStyles]"

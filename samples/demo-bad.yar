@@ -32,6 +32,7 @@ rule CISA_10478915_01 : trojan installs_other_components {
       tool_type = "information-gathering"
       description = "Detects trojan .bat samples"
       sha256 = "98e79f95cf8de8ace88bf223421db5dce303b112152d66ffdf27ebdfcdf967e9"
+      id = "db351fe25ae9d5f2f"
    strings:
       $s1 = { 63 3a 5c 77 69 6e 64 6f 77 73 5c 74 61 73 6b 73 5c 7a 2e 74 78 74 }
       $s2 = { 72 65 67 20 73 61 76 65 20 68 6b 6c 6d 5c 73 79 73 74 65 6d 20 63 3a 5c 77 69 6e 64 6f 77 73 5c 74 61 73 6b 73 5c 65 6d }

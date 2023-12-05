@@ -6,6 +6,7 @@ rule HKTL_EXPL_POC_LibSSH_Auth_Bypass_CVE_2023_2283_Jun23_1 {
       score = 85
       url = "https://www.test.de"
       date = "2023-10-01"
+      id = "ccd8d370af123"
    strings:
       $s1 = "nprocs = %d" ascii fullword
       $s2 = "fork failed: %s" ascii fullword
