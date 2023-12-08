@@ -42,7 +42,7 @@ rule SUSP_Bad_Regex_Sep23 {
 
 rule WinnieThePooh {
     meta:
-        desc = "Detects a fictional malware named WinnieThePooh"
+        desc = "Detects a fictional malware named WinnieThePooh exploiting CVE-2021-1675"
         author = "Florian's Evil Twin"
         url = "https://en.wikipedia.org/wiki/Censorship_of_Winnie-the-Pooh_in_China"
     strings:
