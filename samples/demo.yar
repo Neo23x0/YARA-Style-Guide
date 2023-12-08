@@ -40,3 +40,24 @@ rule SUSP_Bad_Regex_Sep23 {
         $sr1
 }
 
+rule WinnieThePooh {
+    meta:
+        desc = "Detects a fictional malware named WinnieThePooh"
+        author = "Florian's Evil Twin"
+        url = "https://en.wikipedia.org/wiki/Censorship_of_Winnie-the-Pooh_in_China"
+    strings:
+        $x1 = "\\WinnieThePooh.pdb" ascii
+        $x2 = "\\pipe\\WinnieThePooh" ascii
+        $x3 = "coded by Ho Li Fuk"
+
+        $s1 = "] dumping creds"
+        $s2 = "\\temp\\lsass.dmp"
+    condition:
+        uint16(0) == 0x5A4D
+        and filesize < 1MB
+        and (
+            1 of ($x*)
+            or 2 of them
+        )
+        or all of them
+}
