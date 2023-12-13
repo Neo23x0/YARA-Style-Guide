@@ -45,10 +45,11 @@ rule WinnieThePooh {
         desc = "Detects a fictional malware named WinnieThePooh exploiting CVE-2021-1675"
         author = "Florian's Evil Twin"
         url = "https://en.wikipedia.org/wiki/Censorship_of_Winnie-the-Pooh_in_China"
+        created = "2021-06-29"
+        modified = "2023-12-13"
     strings:
         $x1 = "\\WinnieThePooh.pdb" ascii
         $x2 = "\\pipe\\WinnieThePooh" ascii
-        $x3 = "coded by Ho Li Fuk"
 
         $s1 = "] dumping creds"
         $s2 = "\\temp\\lsass.dmp"
