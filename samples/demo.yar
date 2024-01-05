@@ -1,3 +1,4 @@
+import "pe"
 
 rule LOG_F5_BIGIP_Exploitation_Artefacts_CVE_2021_22986_Mar21_1 : LOG {
    meta:
@@ -40,7 +41,7 @@ rule SUSP_Bad_Regex_Sep23 {
         $sr1
 }
 
-rule WinnieThePooh {
+rule WinnieThePooh{
     meta:
         desc = "Detects a fictional malware named WinnieThePooh exploiting CVE-2021-1675"
         author = "Florian's Evil Twin"
@@ -60,5 +61,5 @@ rule WinnieThePooh {
             1 of ($x*)
             or 2 of them
         )
-        or all of them
+        and not pe.number_of_signatures > 0
 }
