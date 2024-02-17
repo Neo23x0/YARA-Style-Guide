@@ -48,6 +48,7 @@ rule WinnieThePooh{
         url = "https://en.wikipedia.org/wiki/Censorship_of_Winnie-the-Pooh_in_China"
         created = "2021-06-29"
         modified = "2023-12-13"
+        tags = "rat, arcom"
     strings:
         $x1 = "\\WinnieThePooh.pdb" ascii
         $x2 = "\\pipe\\WinnieThePooh" ascii
